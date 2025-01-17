@@ -1,0 +1,11 @@
+
+{
+  "reportUninitializedInstanceVariable": "none",
+  "reportUnusedCallResult": "none",
+  "reportUnusedParameter": "none",
+  "reportUnknownMemberType": "none",
+  "reportUnknownVariableType": "none",
+  "reportExplicitAny": "none",
+  "reportCallInDefaultInitializer": "none",
+  "reportDeprecated":"none",
+}
