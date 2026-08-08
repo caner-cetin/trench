@@ -69,7 +69,10 @@ class MainWindow(QMainWindow):
         self.sam_registry_key, self.sam_checkpoint_spec = choose_sam_checkpoint(
             torch.cuda.is_available()
         )
-        self._model_queue: list[ModelSpec] = [REALESRGAN_X4PLUS, self.sam_checkpoint_spec]
+        self._model_queue: list[ModelSpec] = [
+            REALESRGAN_X4PLUS,
+            self.sam_checkpoint_spec,
+        ]
         self.set_operation_in_progress(True)
         self._prepare_next_model()
 
@@ -207,9 +210,7 @@ class MainWindow(QMainWindow):
         self.process_button.setEnabled(self.image is not None)
         self.export_folder_button.setEnabled(True)
         self.scroll_area.setEnabled(True)
-        self.upscale_button.setEnabled(
-            0 <= self.current_mask_index < len(self.masks)
-        )
+        self.upscale_button.setEnabled(0 <= self.current_mask_index < len(self.masks))
         self.update_navigation_buttons()
 
     def on_worker_error(self, message: str) -> None:
@@ -229,16 +230,22 @@ class MainWindow(QMainWindow):
             self._prepare_next_model()
             return
 
-        self.status_label.setText(f"Downloading {spec.name} ({format_bytes(spec.size_bytes)})…")
+        self.status_label.setText(
+            f"Downloading {spec.name} ({format_bytes(spec.size_bytes)})…"
+        )
         self.cancel_download_button.setVisible(True)
         self.progress_bar.setVisible(True)
         self.progress_bar.setRange(0, 100)
         self.progress_bar.setValue(0)
 
         self.model_download_worker = ModelDownloadWorker(spec)
-        self.model_download_worker.progress_signal.connect(self.on_model_download_progress)
+        self.model_download_worker.progress_signal.connect(
+            self.on_model_download_progress
+        )
         self.model_download_worker.error_signal.connect(self.on_model_download_error)
-        self.model_download_worker.finished_signal.connect(self.on_model_download_finished)
+        self.model_download_worker.finished_signal.connect(
+            self.on_model_download_finished
+        )
         self.model_download_worker.start()
 
     def on_model_download_progress(self, downloaded: int, total: int) -> None:
@@ -291,7 +298,9 @@ class MainWindow(QMainWindow):
         self.mask_generator = SamAutomaticMaskGenerator(sam)
 
         self.cancel_download_button.setVisible(False)
-        self.status_label.setText(f"Ready. Using {self.sam_checkpoint_spec.name} — {self.sam_checkpoint_spec.notes}")
+        self.status_label.setText(
+            f"Ready. Using {self.sam_checkpoint_spec.name} — {self.sam_checkpoint_spec.notes}"
+        )
         self.set_operation_in_progress(False)
 
     def select_image(self) -> None:
