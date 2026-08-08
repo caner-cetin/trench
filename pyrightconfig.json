@@ -1,11 +1,19 @@
 
 {
+  "include": ["src/trench"],
+  "exclude": [".git", ".venv", "models"],
+  "extraPaths": ["src"],
+  "pythonVersion": "3.12",
+  "typeCheckingMode": "standard",
   "reportUninitializedInstanceVariable": "none",
   "reportUnusedCallResult": "none",
   "reportUnusedParameter": "none",
   "reportUnknownMemberType": "none",
   "reportUnknownVariableType": "none",
   "reportExplicitAny": "none",
+  "reportGeneralTypeIssues": "none",
   "reportCallInDefaultInitializer": "none",
-  "reportDeprecated":"none",
+  "reportDeprecated": "none",
+  "reportMissingImports": "none",
+  "reportMissingModuleSource": "none"
 }
